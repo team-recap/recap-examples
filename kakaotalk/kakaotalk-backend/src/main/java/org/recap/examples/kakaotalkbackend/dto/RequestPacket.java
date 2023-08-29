@@ -13,4 +13,12 @@ public class RequestPacket {
 
     private MessageType type; // 패킷 종류
     private String text; // 카카오톡 대화 데이터
+
+    // 톰캣 로그용 메서드
+    public String toSimpleString() {
+        if (this.toString().length() > 150)
+            return this.toString().replaceAll("\n", "/n").substring(0, 150) + "...";
+        else
+            return this.toString().replaceAll("\n", "/n");
+    }
 }
