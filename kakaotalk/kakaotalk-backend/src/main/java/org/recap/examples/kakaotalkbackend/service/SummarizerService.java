@@ -24,6 +24,10 @@ public class SummarizerService {
     public void request(WebSocketSession session, RequestPacket requestPacket) { // 카카오톡 대화 메시지 요약 수행
         Message[] messages = MessageUtil.conversationToMessages(requestPacket.getText()); // 초기 메시지 데이터 구축
 
+        // 100줄 이상의 대화는 서버 과부화 방지를 위해 차단
+        if (messages.length >= 100)
+            return;
+
         for (Message message : messages) {
             String summarizedMessage = ""; // 요약된 텍스트가 저장될 변수
 
@@ -45,10 +49,12 @@ public class SummarizerService {
     }
 
     // 대기방 내의 특정 세션에게 메시지 전달
-    public <T> void sendMessage(WebSocketSession session, T message) {
+    public void sendMessage(WebSocketSession session, ResponsePacket message) {
         try {
-            if (session.isOpen()) // 세션이 열려 있을 경우에만 메시지를 전송함
+            if (session.isOpen()) { // 세션이 열려 있을 경우에만 메시지를 전송함
                 session.sendMessage(new TextMessage(mapper.writeValueAsString(message))); // 메시지 내용을 문자열로 변환하여 메시지를 전송함
+                System.out.println(session.getId() + " <- " + message.toSimpleString());
+            }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

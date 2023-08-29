@@ -38,9 +38,14 @@ public class MessageUtil {
                 String sender = splittedLine[0].substring(1, splittedLine[0].length() - 1); // 작성자 추출
                 String message = splittedLine[3]; // 메시지 내용 추출
 
+                // 2000 글자 이상인 글은 서버 과부화 방지를 위해 차단
+                if (message.length() >= 2000)
+                    continue;
+
                 if (lastDay == currentDay) { // 같은 날짜에 이야기 했다면
                     if (messages.getLast().getSender().equals(sender)) { // 같은 작성자인지 확인
-                        messages.getLast().appendOriginalMessage(message); // 이전 메시지와 그룹화 진행
+                        if (messages.getLast().getOriginalMessage().length() < 2000) // 이전 글이 2000글자 미만인 경우에만 그룹화 진행
+                            messages.getLast().appendOriginalMessage(message); // 이전 메시지와 그룹화 진행
                     } else { // 그렇지 않다면
                         // 이전에 채팅을 치지 않았던 사용자라면, 새로운 프로필 이미지 지정
                         if (!profileImageUrls.containsKey(sender))

@@ -12,4 +12,12 @@ public class ResponsePacket {
 
     private MessageType type; // 패킷 종류
     private Message[] messages; // 메시지 배열
+
+    // 톰캣 로그용 메서드
+    public String toSimpleString() {
+        if (this.toString().length() > 150)
+            return this.toString().replaceAll("\n", "/n").substring(0, 150) + "...";
+        else
+            return this.toString().replaceAll("\n", "/n");
+    }
 }

@@ -25,6 +25,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
     protected void handleTextMessage(@NotNull WebSocketSession session, TextMessage message) throws Exception {
         RequestPacket requestPacket = mapper.readValue(message.getPayload(), RequestPacket.class);
 
+        System.out.println(session.getId() + " -> " + requestPacket.toSimpleString());
+
         if (requestPacket.getType().equals(RequestPacket.MessageType.DATA)) { // 사용자가 카카오톡 대화 데이터를 보낸 경우
             service.request(session, requestPacket);
         } else if (requestPacket.getType().equals(RequestPacket.MessageType.PING)) { // 사용자가 소켓 통신 유지를 위한 PING을 보낸 경우
