@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-public class MessageUtil {
+public class MessageParser {
     private static final String defaultProfileImageUrl = "/imgs/profile";
     private static final int numberOfProfileImages = 4;
 
