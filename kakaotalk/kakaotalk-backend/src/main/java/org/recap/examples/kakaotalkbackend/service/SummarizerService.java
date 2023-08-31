@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.recap.Graph;
 import org.recap.Summarizer;
-import org.recap.examples.kakaotalkbackend.component.MessageUtil;
+import org.recap.examples.kakaotalkbackend.component.MessageParser;
 import org.recap.examples.kakaotalkbackend.dto.Message;
 import org.recap.examples.kakaotalkbackend.dto.RequestPacket;
 import org.recap.examples.kakaotalkbackend.dto.ResponsePacket;
@@ -13,7 +13,6 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
-import java.util.LinkedList;
 
 @Service
 @AllArgsConstructor
@@ -22,7 +21,7 @@ public class SummarizerService {
     private final Summarizer summarizer = new Summarizer(); // recap 요약기
 
     public void request(WebSocketSession session, RequestPacket requestPacket) { // 카카오톡 대화 메시지 요약 수행
-        Message[] messages = MessageUtil.conversationToMessages(requestPacket.getText()); // 초기 메시지 데이터 구축
+        Message[] messages = MessageParser.conversationToMessages(requestPacket.getText()); // 초기 메시지 데이터 구축
 
         // 100줄 이상의 대화는 서버 과부화 방지를 위해 차단
         if (messages.length >= 100)
@@ -33,11 +32,11 @@ public class SummarizerService {
 
             // summarize 메서드로 요약을 진행한 뒤 summarizedMessage에 누적
             for (String summarizedSentence : summarizer.summarize(message.getOriginalMessage(), Graph.SimilarityMethods.COSINE_SIMILARITY)) {
-                summarizedMessage = summarizedMessage.concat(summarizedSentence + "\n");
+                summarizedMessage = summarizedMessage.concat("⏺ " + summarizedSentence + "<br>");
             }
 
             // 메시지에 요약본 저장
-            message.setSummarizedMessage(summarizedMessage);
+            message.setSummarizedMessage(summarizedMessage.substring(0, summarizedMessage.length() - 4)); // 결과 텍스트 맨 마지막의 '<br>' 제거
         }
 
         // 서버에서 사용자에게 전달할 패킷 생성
