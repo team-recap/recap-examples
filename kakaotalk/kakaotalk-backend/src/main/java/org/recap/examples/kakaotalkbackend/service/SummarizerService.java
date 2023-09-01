@@ -28,15 +28,15 @@ public class SummarizerService {
             return;
 
         for (Message message : messages) {
-            String summarizedMessage = ""; // 요약된 텍스트가 저장될 변수
+            String summarizedMessage = "<ul>"; // 요약된 텍스트가 저장될 변수
 
             // summarize 메서드로 요약을 진행한 뒤 summarizedMessage에 누적
             for (String summarizedSentence : summarizer.summarize(message.getOriginalMessage(), Graph.SimilarityMethods.COSINE_SIMILARITY)) {
-                summarizedMessage = summarizedMessage.concat("⏺ " + summarizedSentence + "<br>");
+                summarizedMessage = summarizedMessage.concat("<li>" + summarizedSentence + "</li>");
             }
 
             // 메시지에 요약본 저장
-            message.setSummarizedMessage(summarizedMessage.substring(0, summarizedMessage.length() - 4)); // 결과 텍스트 맨 마지막의 '<br>' 제거
+            message.setSummarizedMessage(summarizedMessage.concat("</ul>")); // 결과 텍스트 맨 마지막에 닫은 ul 태그 추가
         }
 
         // 서버에서 사용자에게 전달할 패킷 생성
