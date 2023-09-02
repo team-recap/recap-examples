@@ -11,8 +11,8 @@ public class Message {
     private String originalMessage; // 기존 메시지
     private String summarizedMessage; // 요약된 메시지
 
-    // 기존 메시지 누적
+    // 기존 메시지와 새로운 메시지를 합침
     public void appendOriginalMessage(String message) {
-        originalMessage = originalMessage.concat(message);
+        originalMessage = originalMessage.concat(" " + message);
     }
 }
