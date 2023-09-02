@@ -1,4 +1,4 @@
-package org.example;
+package org.recap.examples.discordbot;
 
 import java.io.FileInputStream;
 import java.util.List;

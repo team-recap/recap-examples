@@ -1,4 +1,4 @@
-package org.example;
+package org.recap.examples.discordbot;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
