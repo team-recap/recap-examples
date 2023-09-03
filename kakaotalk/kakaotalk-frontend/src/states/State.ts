@@ -7,6 +7,11 @@ export type Message = {
   summarizedMessage: string;
 };
 
+export enum Tab {
+  Input,
+  Summary,
+}
+
 export const State = {
   webSocket: atom<WebSocket | null>({
     key: "GlobalState.websocket",
@@ -15,5 +20,9 @@ export const State = {
   messages: atom<Message[]>({
     key: "GlobalState.messages",
     default: [],
+  }),
+  tab: atom<Tab>({
+    key: "GlobalState.tab",
+    default: Tab.Input,
   }),
 };

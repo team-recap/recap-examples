@@ -1,29 +1,29 @@
-import React, { useState } from 'react';
-import { NavWrap, NavMenu } from "@styles/Main";
+import { State, Tab } from "@states/State";
+import { NavMenu, NavWrap } from "@styles/Main";
+import React from 'react';
+import { useRecoilState } from "recoil";
 
-interface NavbarProps {
-  toggleCallback: (value: boolean) => void;
-}
+interface NavbarProps { }
 
-const Navbar: React.FC<NavbarProps> = ({ toggleCallback }) => {
-  const [activeMenu, setActiveMenu] = useState<boolean>(true);
+const Navbar: React.FC<NavbarProps> = () => {
+  const [tab, setTab] = useRecoilState(State.tab);
 
   return (
     <NavWrap>
-       <NavMenu
+      <NavMenu
         onClick={() => {
-          toggleCallback(true);
-          setActiveMenu(true);
+          setTab(Tab.Input);
+
         }}
-        active={activeMenu === true}
-        >카카오톡 회의록 입력</NavMenu>
-       <NavMenu 
+        active={tab === Tab.Input}
+      >카카오톡 회의록 입력</NavMenu>
+      <NavMenu
         onClick={() => {
-          toggleCallback(false);
-          setActiveMenu(false);
+          setTab(Tab.Summary);
+
         }}
-        active={activeMenu === false}
-       >결과 요약문</NavMenu>
+        active={tab === Tab.Summary}
+      >결과 요약문</NavMenu>
     </NavWrap>
   );
 };

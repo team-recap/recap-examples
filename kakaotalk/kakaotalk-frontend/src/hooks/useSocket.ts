@@ -60,7 +60,7 @@ export default function useSocket() {
       () => {
         const createWebsocket = () => {
           const url = process.env.REACT_APP_API_URL;
-          return new WebSocket(`ws://${url}/ws`);
+          return new WebSocket(`wss://${url}/ws`);
         };
 
         if (!webSocket) {

@@ -1,8 +1,11 @@
 import useSocket from "@hooks/useSocket";
+import { State, Tab } from "@states/State";
 import { Button, ReportWrap, SubTitle, TextArea, Title, TitleWrap } from "@styles/Main";
 import { ChangeEvent, useState } from "react";
+import { useSetRecoilState } from "recoil";
 
 const ReportInput = () => {
+  const setTab = useSetRecoilState(State.tab);
   const [text, setText] = useState<string>("");
 
   const {
@@ -28,6 +31,7 @@ const ReportInput = () => {
           onClick={() => {
             sendInput(text);
             setText("")
+            setTab(Tab.Summary);
           }}
         >요약하기</Button>
       </div>
