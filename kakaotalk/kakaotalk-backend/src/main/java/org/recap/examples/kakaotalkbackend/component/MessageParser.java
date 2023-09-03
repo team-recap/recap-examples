@@ -16,6 +16,7 @@ public class MessageParser {
     · 카카오톡 대화 데이터 형식
       1 ~ 3번 줄 : 대화방 정보 (해당 메서드에서는 따로 처리하지 않음)
       4 ~ n번 줄 : '[작성자] [작성 시간] 메시지 내용' or '-----------날짜-----------'
+      * 이때 사용자가 한 메시지에 엔터를 눌러 여러 줄로 메시지를 전송할 수 있음
     · 만약 같은 날에 똑같은 작성자가 연속으로 채팅을 친 경우 하나로 묶음
      */
     public static Message[] conversationToMessages(String conversation) {
@@ -31,9 +32,9 @@ public class MessageParser {
             if (lineNumber <= 3) // 채팅방 사람들의 이름과 저장한 날짜 행을 건너뜀
                 continue;
 
-            if (line.startsWith("-")) { // 날짜 변경선
+            if (line.startsWith("--------------- ")) { // 날짜 변경선
                 currentDay++;
-            } else if (line.startsWith("[")) { // 채팅
+            } else if (line.matches("\\[\\W+] \\[오[전후] \\d?\\d:\\d\\d] [\\s\\S]*")) { // 채팅 메시지 시작
                 String[] splittedLine = line.split(" ", 4); // '[작성자]', '[오전/오후', '시간]', '메시지 내용' 에서 limit를 4로 줘 메시지 내용 안에서 띄어쓰기를 해도 무시하도록 함
                 String sender = splittedLine[0].substring(1, splittedLine[0].length() - 1); // 작성자 추출
                 String message = splittedLine[3]; // 메시지 내용 추출
@@ -69,6 +70,13 @@ public class MessageParser {
                             .build()); // 새로운 메시지 그룹 생성
                     lastDay = currentDay;
                 }
+            } else {
+                // 2000 글자 이상인 글은 서버 과부화 방지를 위해 차단
+                if (line.length() >= 2000)
+                    continue;
+
+                if (messages.getLast().getOriginalMessage().length() < 2000) // 이전 글이 2000글자 미만인 경우에만 그룹화 진행
+                    messages.getLast().appendOriginalMessage(line); // 이전 메시지와 그룹화 진행
             }
         }
         return messages.toArray(new Message[0]);
