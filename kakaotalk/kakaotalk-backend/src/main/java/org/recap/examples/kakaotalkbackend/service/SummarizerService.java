@@ -2,12 +2,12 @@ package org.recap.examples.kakaotalkbackend.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
-import org.recap.Graph;
 import org.recap.Summarizer;
 import org.recap.examples.kakaotalkbackend.component.MessageParser;
 import org.recap.examples.kakaotalkbackend.dto.Message;
 import org.recap.examples.kakaotalkbackend.dto.RequestPacket;
 import org.recap.examples.kakaotalkbackend.dto.ResponsePacket;
+import org.recap.graph.Graph;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;

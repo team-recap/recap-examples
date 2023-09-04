@@ -75,6 +75,9 @@ public class MessageParser {
                 if (line.length() >= 2000)
                     continue;
 
+                if (messages.isEmpty()) // 이전에 저장된 메시지가 없는 경우 그냥 넘어감
+                    continue;
+
                 if (messages.getLast().getOriginalMessage().length() < 2000) // 이전 글이 2000글자 미만인 경우에만 그룹화 진행
                     messages.getLast().appendOriginalMessage(line); // 이전 메시지와 그룹화 진행
             }

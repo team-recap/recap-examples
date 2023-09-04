@@ -37,7 +37,7 @@ dependencies {
 //	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation "kr.bydelta:koalanlp-hnn:2.1.4:assembly"
-	implementation 'com.github.team-recap:recap:v0.0.5'
+	implementation 'com.github.team-recap:recap:v0.0.6'
 }
 
 tasks.named('test') {
