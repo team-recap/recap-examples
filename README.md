@@ -14,7 +14,7 @@
 
 카카오톡의 대화 내보내기 기능을 통해 얻은 대화 내용을 사이트 내에 입력하면 자동으로 회의 내용을 요약하여 보여줍니다.
 
-## [디스코드 실시간 회의 요약](https://github.com/team-recap/recap-examples/tree/main/discord)
+## [실시간 디스코드 회의록 요약](https://github.com/team-recap/recap-examples/tree/main/discord)
 > 현재 이 프로젝트는 개발 중이므로 아직은 체험해 보실 수 없습니다.
 
 디스코드 실시간 회의 요약 프로젝트는 디스코드 내에서 진행 중인 회의에 대한 요약을 STT(Speech-To-Text) 기술과 [Recap 라이브러리](https://github.com/team-recap/recap)를 활용해 실시간으로 회의 요약본을 보여주는 예제입니다.
