@@ -6,7 +6,7 @@
 
 ## [카카오톡 회의록 요약](https://github.com/team-recap/recap-examples/tree/main/kakaotalk)
 
-> [![카카오톡 시연 영상](http://img.youtube.com/vi/ChyJYePhm4w/0.jpg)](https://youtu.be/ChyJYePhm4w)
+> [![카카오톡 시연 영상](http://img.youtube.com/vi/G4gBvF9SZR0/0.jpg)](https://youtu.be/G4gBvF9SZR0)
 > 
 > _상단의 이미지를 클릭하면 시연 영상을 시청하실 수 있습니다._
 
