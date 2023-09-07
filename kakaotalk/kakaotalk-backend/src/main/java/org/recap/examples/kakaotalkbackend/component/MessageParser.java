@@ -70,7 +70,7 @@ public class MessageParser {
                             .build()); // 새로운 메시지 그룹 생성
                     lastDay = currentDay;
                 }
-            } else {
+            } else if (!line.matches("[\\s\\S]*님이 [\\s\\S]*님을 초대하였습니다.")) { // 카카오톡 내의 예약된 문장이 아닌 경우 이전에 말한 사용자의 메시지로 판단
                 // 2000 글자 이상인 글은 서버 과부화 방지를 위해 차단
                 if (line.length() >= 2000)
                     continue;

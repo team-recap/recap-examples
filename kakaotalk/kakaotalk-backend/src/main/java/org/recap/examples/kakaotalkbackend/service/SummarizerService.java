@@ -24,19 +24,28 @@ public class SummarizerService {
         Message[] messages = MessageParser.conversationToMessages(requestPacket.getText()); // 초기 메시지 데이터 구축
 
         // 100줄 이상의 대화는 서버 과부화 방지를 위해 차단
-        if (messages.length >= 100)
-            return;
+        if (messages.length >= 100) {
+            // 오류 메시지 반환
+            Message error = Message.builder()
+                    .sender("오류")
+                    .summarizedMessage("100개 이상의 메시지는 처리할 수 없습니다.")
+                    .originalMessage("100개 이상의 메시지는 처리할 수 없습니다.")
+                    .build();
 
-        for (Message message : messages) {
-            String summarizedMessage = "<ul>"; // 요약된 텍스트가 저장될 변수
+            messages = new Message[1];
+            messages[0] = error;
+        } else { // 100줄 미만의 대화는 요약 처리 진행
+            for (Message message : messages) {
+                String summarizedMessage = "<ul>"; // 요약된 텍스트가 저장될 변수
 
-            // summarize 메서드로 요약을 진행한 뒤 summarizedMessage에 누적
-            for (String summarizedSentence : summarizer.summarize(message.getOriginalMessage(), Graph.SimilarityMethods.COSINE_SIMILARITY)) {
-                summarizedMessage = summarizedMessage.concat("<li>" + summarizedSentence + "</li>");
+                // summarize 메서드로 요약을 진행한 뒤 summarizedMessage에 누적
+                for (String summarizedSentence : summarizer.summarize(message.getOriginalMessage(), Graph.SimilarityMethods.COSINE_SIMILARITY)) {
+                    summarizedMessage = summarizedMessage.concat("<li>" + summarizedSentence + "</li>");
+                }
+
+                // 메시지에 요약본 저장
+                message.setSummarizedMessage(summarizedMessage.concat("</ul>")); // 결과 텍스트 맨 마지막에 닫은 ul 태그 추가
             }
-
-            // 메시지에 요약본 저장
-            message.setSummarizedMessage(summarizedMessage.concat("</ul>")); // 결과 텍스트 맨 마지막에 닫은 ul 태그 추가
         }
 
         // 서버에서 사용자에게 전달할 패킷 생성
