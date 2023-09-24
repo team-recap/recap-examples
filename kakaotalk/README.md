@@ -2,8 +2,6 @@
 
 ![](./images/result.png)
 
-[사이트 이동](https://recap-examples.junyoung.dev/)
-
 본 프로젝트는 [Recap](https://github.com/team-recap/recap) 라이브러리를 통해 카카오톡에서 진행한 회의를 자동으로 요약해주는 예제입니다.
 
 카카오톡의 `대화 내보내기` 기능을 통해 얻은 대화 내용을 사이트 내에 입력하면 자동으로 회의 내용을 요약하여 보여줍니다.
